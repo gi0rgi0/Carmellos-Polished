@@ -15,7 +15,7 @@ export default function Home() {
             Carmello’s Restaurant & Wine Bar
           </h1>
           <p className="text-xl text-gray-200 max-w-2xl mx-auto">
-            Exquisite Northern Italian cuisine served with timeless elegance for over 31 years.
+            Exquisite Northern Italian cuisine served with timeless elegance for over 33 years.
           </p>
         </div>
       </section>

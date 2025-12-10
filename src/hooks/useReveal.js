@@ -1,23 +1,34 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
-export default function useReveal(animation='fade') {
-  const ref = useRef();
+export default function useReveal(options = {}) {
+  const ref = useRef(null);
 
   useEffect(() => {
     const el = ref.current;
+    if (!el) return;
+
+    el.style.opacity = "0";
+    el.style.transform = "translateY(30px)";
+    el.style.transition = "opacity 1.1s ease-out, transform 1.1s ease-out";
+
     const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            el.classList.add(`animate-${animation}`);
-            observer.unobserve(el);
-          }
-        });
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.style.opacity = "1";
+          el.style.transform = "translateY(0)";
+          observer.unobserve(el);
+        }
       },
-      { threshold: 0.2 }
+      {
+        threshold: 0.15,
+        rootMargin: "0px 0px -50px 0px",
+        ...options,
+      }
     );
+
     observer.observe(el);
-  }, [animation]);
+  }, []);
 
   return ref;
 }
+
